@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EntityController : MonoBehaviour
 {
@@ -13,6 +14,12 @@ public class EntityController : MonoBehaviour
     [Header("Entity Movement Attributes")] public List<EntityMovement> movement = new List<EntityMovement>();
 
     [Space(10)] public bool isCapturingMovement = true;
+
+    [Header("Entity Camera Attributes")] public EntityCamera entityCamera;
+
+    private CameraViewPortInfo viewPortInfo;
+
+    [Space(10)] public bool isCapturingCamera = true;
 
     private void Start()
     {
@@ -34,6 +41,8 @@ public class EntityController : MonoBehaviour
         {
             movement.Add(movementControllers[i]);
         }
+
+        entityCamera = Camera.main.GetComponent<EntityCamera>();
     }
 
     private void UpdateController()
@@ -42,11 +51,17 @@ public class EntityController : MonoBehaviour
         {
             ManageInput();
         }
+        
+        if (isCapturingCamera)
+        {
+            ManageCamera();
+        }
 
         if (isCapturingMovement)
         {
             ManageMovement(inputValues);
         }
+        
     }
 
     private void ManageInput()
@@ -62,8 +77,13 @@ public class EntityController : MonoBehaviour
         
         for (int i = 0; i < movement.Count; i++)
         {
-            movement[i].Move(inputValues, ReturnIfRootIsActive(movement[i], activeRoots));
+            movement[i].Move(inputValues, ReturnIfRootIsActive(movement[i], activeRoots), viewPortInfo, i, movement);
         }
+    }
+
+    private void ManageCamera()
+    {
+        viewPortInfo = entityCamera.ReturnViewportInfo();
     }
 
     private List<EntityMovement> ReturnActiveRoots(InputInfo input)

@@ -323,6 +323,8 @@ MonoBehaviour:
   isCapturingInput: 1
   movement: []
   isCapturingMovement: 1
+  entityCamera: {fileID: 0}
+  isCapturingCamera: 1
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +377,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -431,6 +433,10 @@ MonoBehaviour:
     cameraMinZoom: 30
     cameraMaxZoom: 90
     cameraZoomSmoothing: 0.058
+  viewPortInfo:
+    viewportWorldMin: {x: 0, y: 0}
+    viewportWorldMax: {x: 0, y: 0}
+  viewportOffset: {x: 2, y: 0}
 --- !u!1 &565718031
 GameObject:
   m_ObjectHideFlags: 0

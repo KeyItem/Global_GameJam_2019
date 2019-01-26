@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TopDownCamera : GenericCamera
+public class EntityCamera : GenericCamera
 {
     [Header("Camera Movement Attributes")]
     private Vector3 cameraMovementSmoothingVelocity;
@@ -10,9 +10,13 @@ public class TopDownCamera : GenericCamera
     [Header("Camera Zoom Attributes")]
     private float cameraZoomSmoothingVelocity;
 
+    [Header("Camera Size Attributes")] public CameraViewPortInfo viewPortInfo;
+
+    [Space(10)] public Vector2 viewportOffset;
+
     [Header("Player Camera Attributes")]
     private List<Transform> targetTransforms = new List<Transform>();
-
+    
     private void Start()
     {
         InitializeCamera();
@@ -26,6 +30,8 @@ public class TopDownCamera : GenericCamera
     public override void InitializeCamera()
     {
         AddMultipleTargetsToList(targetTransforms);
+        
+        viewPortInfo = new CameraViewPortInfo(Camera.main, viewportOffset);
 
         base.InitializeCamera();
     }
@@ -51,6 +57,11 @@ public class TopDownCamera : GenericCamera
         float newCameraFieldOfView = Mathf.SmoothDamp(targetCamera.fieldOfView, maxDistanceBetweenTargets, ref cameraZoomSmoothingVelocity, cameraZoomingAttributes.cameraZoomSmoothing);
 
         ZoomCamera(newCameraFieldOfView);
+    }
+
+    public CameraViewPortInfo ReturnViewportInfo()
+    {
+        return viewPortInfo;
     }
 
     private Vector3 ReturnTargetsCenter(List<Transform> targets)
@@ -97,5 +108,21 @@ public class TopDownCamera : GenericCamera
         }
 
         return maxDistanceBounds.size.x;
+    }
+}
+
+[System.Serializable]
+public struct CameraViewPortInfo
+{
+    public Vector2 viewportWorldMin;
+    public Vector2 viewportWorldMax;
+
+    public CameraViewPortInfo(Camera targetCamera, Vector2 newViewportOffset)
+    {            
+        this.viewportWorldMin = targetCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+        this.viewportWorldMax = targetCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+
+        this.viewportWorldMin += newViewportOffset;
+        this.viewportWorldMax -= newViewportOffset;
     }
 }
