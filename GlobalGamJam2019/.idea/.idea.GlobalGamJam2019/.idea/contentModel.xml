@@ -255,6 +255,11 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Entity" t="Include">
+            <e p="EntityController.cs" t="Include" />
+            <e p="EntityInput.cs" t="Include" />
+            <e p="EntityMovement.cs" t="Include" />
+          </e>
           <e p="Utility" t="Include">
             <e p="Debugger.cs" t="Include" />
             <e p="Helper.cs" t="Include" />
