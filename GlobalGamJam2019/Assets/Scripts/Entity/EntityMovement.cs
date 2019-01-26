@@ -102,7 +102,7 @@ public class EntityMovement : MonoBehaviour
             if (rootIndex == 0)
             {
                 targetXMin = viewPortInfo.viewportWorldMin.x;
-                targetXMax = roots[1].transform.position.x - offsetValue;
+                targetXMax = roots[1].isActive ? roots[1].transform.position.x - offsetValue : viewPortInfo.viewportWorldMax.x;
 
                 if (newXPosition < targetXMin || newXPosition > targetXMax)
                 {
@@ -111,7 +111,7 @@ public class EntityMovement : MonoBehaviour
             }
             else
             {
-                targetXMin = roots[0].transform.position.x + offsetValue;
+                targetXMin = roots[0].isActive ? roots[0].transform.position.x + offsetValue : viewPortInfo.viewportWorldMin.x;
                 targetXMax = viewPortInfo.viewportWorldMax.x;
 
                 if (newXPosition < targetXMin || newXPosition > targetXMax)
@@ -125,7 +125,19 @@ public class EntityMovement : MonoBehaviour
             if (rootIndex == 0)
             {
                 targetXMin = viewPortInfo.viewportWorldMin.x;
-                targetXMax = roots[1].transform.position.x - offsetValue;
+
+                if (roots[1].isActive)
+                {
+                    targetXMax = roots[1].transform.position.x - offsetValue;
+                }
+                else if (roots[2].isActive)
+                {
+                    targetXMax = roots[2].transform.position.x - offsetValue;
+                }
+                else
+                {
+                    targetXMax = viewPortInfo.viewportWorldMax.x;
+                }
                                 
                 if (newXPosition < targetXMin || newXPosition > targetXMax)
                 {
@@ -134,9 +146,10 @@ public class EntityMovement : MonoBehaviour
             }
             else if (rootIndex == 1)
             {
-                targetXMin = roots[0].transform.position.x + offsetValue;
-                targetXMax = roots[2].transform.position.x - offsetValue;
+                targetXMin = roots[0].isActive ? roots[0].transform.position.x + offsetValue : viewPortInfo.viewportWorldMin.x;
 
+                targetXMax = roots[2].isActive ? roots[2].transform.position.x - offsetValue : viewPortInfo.viewportWorldMax.x;
+           
                 if (newXPosition < targetXMin || newXPosition > targetXMax)
                 {
                     return true;
@@ -144,7 +157,19 @@ public class EntityMovement : MonoBehaviour
             }
             else
             {
-                targetXMin = roots[1].transform.position.x + offsetValue;
+                if (roots[1].isActive)
+                {
+                    targetXMin = roots[1].transform.position.x + offsetValue;
+                }
+                else if (roots[0].isActive)
+                {
+                    targetXMin = roots[0].transform.position.x + offsetValue;
+                }
+                else
+                {
+                    targetXMin = viewPortInfo.viewportWorldMin.x;
+                }
+                
                 targetXMax = viewPortInfo.viewportWorldMax.x;
 
                 if (newXPosition < targetXMin || newXPosition > targetXMax)

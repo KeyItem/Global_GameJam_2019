@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class EntityCamera : GenericCamera
 {
@@ -12,16 +13,12 @@ public class EntityCamera : GenericCamera
 
     [Header("Camera Size Attributes")] public CameraViewPortInfo viewPortInfo;
 
-    [Space(10)] public Vector2 viewportOffset;
-
-    [Header("Player Camera Attributes")]
-    private List<Transform> targetTransforms = new List<Transform>();
-    
+    [Space(10)] public Vector2 viewportOffset;  
     private void Start()
     {
         InitializeCamera();
     }
-
+    
     public override void LateUpdate()
     {
         ManageCamera();
@@ -29,7 +26,7 @@ public class EntityCamera : GenericCamera
 
     public override void InitializeCamera()
     {
-        AddMultipleTargetsToList(targetTransforms);
+        AddMultipleTargetsToList(cameraTargets);
         
         viewPortInfo = new CameraViewPortInfo(Camera.main, viewportOffset);
 
@@ -38,22 +35,24 @@ public class EntityCamera : GenericCamera
 
     public override void ManageCamera()
     {
-        ManageCameraMovement();
-        ManageCameraZooming();
+        List<CameraTargetInfo> activeTargets = ReturnActiveTargets(cameraTargetInfo);
+        
+        ManageCameraMovement(activeTargets);
+        ManageCameraZooming(activeTargets);
     }
 
-    private void ManageCameraMovement()
+    private void ManageCameraMovement(List<CameraTargetInfo> targetInfo)
     {
-        Vector3 newCameraCenterPoint = ReturnTargetsCenter(cameraTargets);
+        Vector3 newCameraCenterPoint = ReturnTargetsCenter(targetInfo);
         Vector3 newCameraTargetPosition = newCameraCenterPoint + cameraMovementAttributes.cameraOffset;
         Vector3 newCameraPosition = Vector3.SmoothDamp(transform.position, newCameraTargetPosition, ref cameraMovementSmoothingVelocity, cameraMovementAttributes.cameraMoveSmoothing);
 
         MoveCamera(newCameraPosition);
     }
 
-    private void ManageCameraZooming()
+    private void ManageCameraZooming(List<CameraTargetInfo> targetInfo)
     {
-        float maxDistanceBetweenTargets = ReturnLargestDistanceBetweenTargets(cameraTargets);
+        float maxDistanceBetweenTargets = ReturnLargestDistanceBetweenTargets(targetInfo);
         float newCameraFieldOfView = Mathf.SmoothDamp(targetCamera.fieldOfView, maxDistanceBetweenTargets, ref cameraZoomSmoothingVelocity, cameraZoomingAttributes.cameraZoomSmoothing);
 
         ZoomCamera(newCameraFieldOfView);
@@ -64,7 +63,7 @@ public class EntityCamera : GenericCamera
         return viewPortInfo;
     }
 
-    private Vector3 ReturnTargetsCenter(List<Transform> targets)
+    private Vector3 ReturnTargetsCenter(List<CameraTargetInfo> targets)
     {
         if (targets.Count == 0)
         {
@@ -73,27 +72,32 @@ public class EntityCamera : GenericCamera
 
         if (targets.Count == 1)
         {
-            return targets[0].position;
+            return targets[0].targetTransform.position;
         }
 
-        Bounds centerBounds = new Bounds(targets[0].position, Vector3.zero);
+        Bounds centerBounds = new Bounds(targets[0].targetTransform.position, Vector3.zero);
 
         for (int i = 0; i < targets.Count; i++)
         {
-            centerBounds.Encapsulate(targets[i].position);
+            centerBounds.Encapsulate(targets[i].targetTransform.position);
         }
 
         return centerBounds.center;
     }
 
-    private float ReturnLargestDistanceBetweenTargets(List<Transform> targets)
+    private float ReturnLargestDistanceBetweenTargets(List<CameraTargetInfo> targets)
     {
-        Bounds maxDistanceBounds = new Bounds(targets[0].position, Vector3.zero);
+        if (targets.Count == 0)
+        {
+            return 0f;
+        }
+        
+        Bounds maxDistanceBounds = new Bounds(targets[0].targetTransform.position, Vector3.zero);
         float maxDistance = 0;
 
         for (int i = 0; i < targets.Count; i++)
         {
-            maxDistanceBounds.Encapsulate(targets[i].position);
+            maxDistanceBounds.Encapsulate(targets[i].targetTransform.position);
         }
 
         maxDistance = maxDistanceBounds.size.x;
@@ -108,6 +112,35 @@ public class EntityCamera : GenericCamera
         }
 
         return maxDistanceBounds.size.x;
+    }
+
+    private List<CameraTargetInfo> ReturnActiveTargets(List<CameraTargetInfo> targets)
+    {
+        List<CameraTargetInfo> activeTargets = new List<CameraTargetInfo>();
+
+        for (int i = 0; i < targets.Count; i++)
+        {
+            if (targets[i].targetMovement.isActive)
+            {
+                activeTargets.Add(targets[i]);
+            }
+        }
+
+        return activeTargets;
+    }
+}
+
+[System.Serializable]
+public struct CameraTargetInfo
+{
+    [Header("Camera Target Info")] public Transform targetTransform;
+
+    [Space(10)] public EntityMovement targetMovement;
+
+    public CameraTargetInfo(Transform newTargetTransform)
+    {
+        this.targetTransform = newTargetTransform;
+        this.targetMovement = newTargetTransform.GetComponent<EntityMovement>();
     }
 }
 

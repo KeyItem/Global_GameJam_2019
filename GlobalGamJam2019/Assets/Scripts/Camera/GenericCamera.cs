@@ -10,6 +10,9 @@ public class GenericCamera : MonoBehaviour
 
     [Space(10)]
     public List<Transform> cameraTargets = new List<Transform>();
+    
+    [Space(10)]
+    public List<CameraTargetInfo> cameraTargetInfo = new List<CameraTargetInfo>();
 
     [Header("Camera Base Movement Attributes")]
     public CameraMovementAttributes cameraMovementAttributes;
@@ -82,12 +85,7 @@ public class GenericCamera : MonoBehaviour
     {
         for (int i = 0; i < targetsToAdd.Count; i++)
         {
-            if (cameraTargets.Contains(targetsToAdd[i]))
-            {
-                continue;
-            }
-
-            cameraTargets.Add(targetsToAdd[i]);
+            cameraTargetInfo.Add(new CameraTargetInfo(targetsToAdd[i]));
         }
     }
 
