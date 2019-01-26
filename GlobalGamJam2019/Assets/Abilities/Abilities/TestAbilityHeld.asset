@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4b2075b1555c64bbd66ac160d9bcdd, type: 3}
+  m_Name: TestAbilityHeld
+  m_EditorClassIdentifier: 
+  actionManager: {fileID: 0}
+  abilityName: TestAbility
+  abilityActivation:
+    activationType: 0
+    activationCount: 0
+  abilityCooldown:
+    cooldownType: 0
+    cooldownTime: 1.5
+  abilityActions:
+  - abilityMovement:
+      abilityTime: 0.2
+      isInfinite: 0
+      movementDirection: {x: 0, y: 0, z: 1}
+      movementCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      actionMoveDistance: 2
+      actionInputModifier: 0
+      movementSpace: 0
+      useGravity: 0
+      useForward: 1
+    abilityInteraction:
+      abilityTime: 0
+      isInfinite: 0
+      abilityInteractionMovement:
+        movementDirection: {x: 0, y: 0, z: 0}
+        movementCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        actionMoveDistance: 1
+        movementSpace: 0
+        movementStartPosition: {x: 0, y: 0, z: 0}
+        useForward: 1
+        resetColliderToBasePosition: 0
+      abilityColliderAttributes:
+        abilityColliderType: 0
+        colliderSize: {x: 0, y: 0, z: 0}
+        colliderRadius: 0
+        colliderHitMask:
+          serializedVersion: 2
+          m_Bits: 0
+    abilityEffect:
+      abilityTime: 0
+      isInfinite: 0
+      damageValue: 0
+      effectValue: 0
+      effectDuration: 0
+  - abilityMovement:
+      abilityTime: 0.2
+      isInfinite: 0
+      movementDirection: {x: 0, y: 0, z: 1}
+      movementCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      actionMoveDistance: 5
+      actionInputModifier: 0
+      movementSpace: 0
+      useGravity: 0
+      useForward: 1
+    abilityInteraction:
+      abilityTime: 0
+      isInfinite: 0
+      abilityInteractionMovement:
+        movementDirection: {x: 0, y: 0, z: 0}
+        movementCurve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        actionMoveDistance: 0
+        movementSpace: 0
+        movementStartPosition: {x: 0, y: 0, z: 0}
+        useForward: 0
+        resetColliderToBasePosition: 0
+      abilityColliderAttributes:
+        abilityColliderType: 0
+        colliderSize: {x: 0, y: 0, z: 0}
+        colliderRadius: 0
+        colliderHitMask:
+          serializedVersion: 2
+          m_Bits: 0
+    abilityEffect:
+      abilityTime: 0
+      isInfinite: 0
+      damageValue: 0
+      effectValue: 0
+      effectDuration: 0
+  abilityLogic: {fileID: 0}
