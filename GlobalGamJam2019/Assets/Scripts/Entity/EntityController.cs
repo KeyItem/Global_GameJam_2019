@@ -10,7 +10,7 @@ public class EntityController : MonoBehaviour
 
     [Space(10)] public bool isCapturingInput = true;
 
-    [Header("Entity Movement Attributes")] public EntityMovement[] movement;
+    [Header("Entity Movement Attributes")] public List<EntityMovement> movement = new List<EntityMovement>();
 
     [Space(10)] public bool isCapturingMovement = true;
 
@@ -27,7 +27,13 @@ public class EntityController : MonoBehaviour
     private void InitializeController()
     {
         input = GetComponent<EntityInput>();
-        movement = GetComponentsInChildren<EntityMovement>();
+        
+        EntityMovement[] movementControllers = GetComponentsInChildren<EntityMovement>();
+
+        for (int i = 0; i < movementControllers.Length; i++)
+        {
+            movement.Add(movementControllers[i]);
+        }
     }
 
     private void UpdateController()
@@ -39,7 +45,7 @@ public class EntityController : MonoBehaviour
 
         if (isCapturingMovement)
         {
-            ManageMovement();
+            ManageMovement(inputValues);
         }
     }
 
@@ -50,11 +56,45 @@ public class EntityController : MonoBehaviour
         inputValues = input.ReturnInput();
     }
 
-    private void ManageMovement()
+    private void ManageMovement(InputInfo input)
     {
-        for (int i = 0; i < movement.Length; i++)
+        List<EntityMovement> activeRoots = ReturnActiveRoots(input);
+        
+        for (int i = 0; i < movement.Count; i++)
         {
-            movement[i].Move(inputValues);
+            movement[i].Move(inputValues, ReturnIfRootIsActive(movement[i], activeRoots));
         }
+    }
+
+    private List<EntityMovement> ReturnActiveRoots(InputInfo input)
+    {
+        List<EntityMovement> activeRoots = new List<EntityMovement>();
+
+        if (input.ReturnCurrentButtonState("Button0"))
+        {
+            activeRoots.Add(movement[0]);
+        }
+
+        if (input.ReturnCurrentButtonState("Button1"))
+        {
+            activeRoots.Add(movement[1]);
+        }
+
+        if (input.ReturnCurrentButtonState("Button2"))
+        {
+            activeRoots.Add(movement[2]);
+        }
+
+        return activeRoots;
+    }
+
+    private bool ReturnIfRootIsActive(EntityMovement targetRoot, List<EntityMovement> activeRoots)
+    {
+        if (activeRoots.Contains(targetRoot))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

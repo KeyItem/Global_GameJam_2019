@@ -8,9 +8,9 @@ public class EntityMovement : MonoBehaviour
 
     private Vector2 lastDirection = Vector2.down;
     
-    public void Move(InputInfo input)
+    public void Move(InputInfo input, bool isControlled)
     {
-        Vector2 newMovement = ReturnMovementVector(ReturnInputMovementVector(input));
+        Vector2 newMovement = ReturnMovementVector(ReturnInputMovementVector(input), isControlled);
         
         transform.Translate(newMovement * Time.deltaTime);
 
@@ -25,16 +25,26 @@ public class EntityMovement : MonoBehaviour
         return new Vector2(xAxisRaw, 0);
     }
 
-    public Vector2 ReturnMovementVector(Vector2 inputVector)
+    public Vector2 ReturnMovementVector(Vector2 inputVector, bool isControlled)
     {
         if (inputVector.magnitude > 1)
         {
             inputVector.Normalize();
         }
         
-        Vector2 newMovementVector = (inputVector  + movementAttributes.ReturnOngoingSpeed()).normalized;
+        Vector2 newMovementVector = movementAttributes.ReturnOngoingSpeed();
+
+        if (isControlled)
+        {
+            newMovementVector = inputVector * movementAttributes.movementSpeed + movementAttributes.ReturnOngoingSpeed();
+        }
         
-        return newMovementVector * movementAttributes.movementSpeed;
+        return newMovementVector;
+    }
+
+    public bool CheckIfMovementIsOutOfBounds()
+    {
+        return false;
     }
 }
 
