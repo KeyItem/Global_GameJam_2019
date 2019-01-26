@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -88,7 +88,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: c07dd269506d4974298c2c887d5dd432,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -179,7 +180,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &534669902
 GameObject:
@@ -261,7 +262,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &821825872
 GameObject:
@@ -275,7 +276,7 @@ GameObject:
   - component: {fileID: 821825875}
   - component: {fileID: 821825874}
   - component: {fileID: 821825873}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,10 +350,10 @@ Transform:
   m_GameObject: {fileID: 821825872}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 39.53, y: 1, z: 34.769997}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1342811983
 GameObject:
@@ -507,17 +508,58 @@ MonoBehaviour:
       _assignMouseOnStart: 1
       _assignKeyboardOnStart: 1
       _excludeFromControllerAutoAssignment: 1
-    actions: []
+    actions:
+    - _id: 1
+      _name: HorizontalAxis
+      _type: 0
+      _descriptiveName: 
+      _positiveDescriptiveName: HorizontalAxisPositive
+      _negativeDescriptiveName: HorizontalAxisNegative
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 1
+    - _id: 2
+      _name: VerticalAxis
+      _type: 0
+      _descriptiveName: Action0
+      _positiveDescriptiveName: VerticalAxisPositive
+      _negativeDescriptiveName: VerticalAxisNegative
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 1
+    - _id: 3
+      _name: Action0
+      _type: 1
+      _descriptiveName: 
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 2
     actionCategories:
     - _name: Default
       _descriptiveName: Default
       _tag: 
       _id: 0
       _userAssignable: 1
+    - _name: Movement
+      _descriptiveName: 
+      _tag: 
+      _id: 1
+      _userAssignable: 1
+    - _name: Actions
+      _descriptiveName: 
+      _tag: 
+      _id: 2
+      _userAssignable: 1
     actionCategoryMap:
       list:
       - categoryId: 0
         actionIds: 
+      - categoryId: 1
+        actionIds: 0100000002000000
+      - categoryId: 2
+        actionIds: 03000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -572,8 +614,8 @@ MonoBehaviour:
     customControllerMaps: []
     customControllers: []
     playerIdCounter: 1
-    actionIdCounter: 0
-    actionCategoryIdCounter: 1
+    actionIdCounter: 4
+    actionCategoryIdCounter: 3
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 1
     joystickLayoutIdCounter: 1
@@ -599,5 +641,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
