@@ -7,14 +7,24 @@ public class EntityMovement : MonoBehaviour
     [Header("Entity Movement Attributes")] public EntityMovementAttributes movementAttributes;
 
     private Vector2 lastDirection = Vector2.down;
+
+    [Space(10)] public bool isActive = true;
     
     public void Move(InputInfo input, bool isControlled, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots)
     {
-        Vector2 newMovement = ReturnMovementVector(ReturnInputMovementVector(input), isControlled, viewPortInfo, rootIndex, activeRoots);
+        if (isActive)
+        {
+            Vector2 newMovement = ReturnMovementVector(ReturnInputMovementVector(input), isControlled, viewPortInfo, rootIndex, activeRoots);
         
-        transform.Translate(newMovement * Time.deltaTime);
+            transform.Translate(newMovement * Time.deltaTime);
 
-        lastDirection = newMovement;
+            lastDirection = newMovement;
+        }        
+    }
+
+    public void DisableMovement()
+    {
+        isActive = false;
     }
 
     public Vector2 ReturnInputMovementVector(InputInfo input)
@@ -75,7 +85,7 @@ public class EntityMovement : MonoBehaviour
         float targetXMin = 0f;
         float targetXMax = 0f;
 
-        float offsetValue = 1f;
+        float offsetValue = movementAttributes.collisionOffset;
         
         if (roots.Count == 1)
         {
@@ -157,6 +167,10 @@ public struct EntityMovementAttributes
     public float ongoingSpeed;
 
     [Space(10)] public Vector2 ongoingDirection;
+
+    [Header("Entity Collision Offset")] 
+    [Range(0.05f, 1.25f)]
+    public float collisionOffset;
 
     public Vector2 ReturnOngoingSpeed()
     {
