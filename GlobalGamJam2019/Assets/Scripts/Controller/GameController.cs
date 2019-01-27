@@ -109,6 +109,8 @@ public class GameController : MonoBehaviour
             {
                 ResetObstacles();
                 
+                player.StartGrow();
+                
                 isWaitingToStart = false;
 
                 player.StopPlayerTrailRenderer();
@@ -147,6 +149,8 @@ public class GameController : MonoBehaviour
             if (CheckForStartGameInput(input))
             {
                 ResetPlayerRoots();
+                
+                player.StopGrow();
 
                 isGameOver = false;
 

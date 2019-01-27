@@ -78,7 +78,7 @@ public class EntityCamera : GenericCamera
     {
         if (targets.Count == 0)
         {
-            return Vector3.zero;
+            return new Vector3(0, 7.5f, -10);
         }
 
         if (targets.Count == 1)

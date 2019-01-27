@@ -20,6 +20,8 @@ public class EntityController : MonoBehaviour
     [Header("Entity Trail Renderer Attributes")]
     private TrailRenderer[] trailRenderers;
 
+    [Header("Grow Animator")] public Animator growAnimator;
+
     public void InitializeController()
     {        
         EntityMovement[] movementControllers = GetComponentsInChildren<EntityMovement>();
@@ -102,6 +104,16 @@ public class EntityController : MonoBehaviour
         {
             trailRenderers[i].Clear();
         }
+    }
+
+    public void StartGrow()
+    {
+        growAnimator.SetTrigger("isGrow");
+    }
+
+    public void StopGrow()
+    {
+        growAnimator.SetTrigger("isIdle");
     }
 
     public void Reset(EntityResetAttributes resetAttributes)
