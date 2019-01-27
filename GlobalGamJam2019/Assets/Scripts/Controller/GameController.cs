@@ -38,6 +38,11 @@ public class GameController : MonoBehaviour
 
     [Header("Obstacles")] public EntityObstacle[] obstacles;
 
+    [Header("UI Attributes")] public UIController UIController;
+    
+    [Header("Score Attributes")]
+    public ScoreController scoreController;
+
     private void Start()
     {
         InitializeGameController();
@@ -54,6 +59,8 @@ public class GameController : MonoBehaviour
         InitializeDepthMarkers();
         InitializeEntityController();
         InitializeObstacles();
+        InitializeUIController();
+        InitializeScoreController();
     }
 
     private void InitializeInput()
@@ -69,6 +76,16 @@ public class GameController : MonoBehaviour
     private void InitializeObstacles()
     {
         obstacles = GameObject.FindObjectsOfType<EntityObstacle>();
+    }
+
+    private void InitializeUIController()
+    {
+        UIController = GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>();
+    }
+
+    private void InitializeScoreController()
+    {
+        scoreController = GetComponent<ScoreController>();
     }
    
     private void ManageGame()
@@ -111,6 +128,8 @@ public class GameController : MonoBehaviour
             if (CheckForGameOver(activePlayerRoots))
             {
                 player.StopPlayerMovement();
+                
+                scoreController.CheckNewScore(playerDepth);
 
                 isPlaying = false;
 
@@ -154,6 +173,8 @@ public class GameController : MonoBehaviour
     private void UpdateDepth(List<EntityMovement> activeRoots)
     {
         playerDepth = ReturnPlayerDepth(activeRoots);
+        
+        UIController.UpdateDepthText(playerDepth);
 
         CheckForNextDepthMarker(playerDepth);
     }

@@ -382,17 +382,22 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="Camera" t="Include">
+            <e p="DSPixelPerfectCamera.cs" t="Include" />
             <e p="EntityCamera.cs" t="Include" />
             <e p="GenericCamera.cs" t="Include" />
           </e>
           <e p="Controller" t="Include">
             <e p="GameController.cs" t="Include" />
+            <e p="ScoreController.cs" t="Include" />
           </e>
           <e p="Entity" t="Include">
             <e p="EntityController.cs" t="Include" />
             <e p="EntityInput.cs" t="Include" />
             <e p="EntityMovement.cs" t="Include" />
             <e p="EntityObstacle.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="UIController.cs" t="Include" />
           </e>
           <e p="Utility" t="Include">
             <e p="Debugger.cs" t="Include" />
