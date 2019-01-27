@@ -25,20 +25,31 @@ public class EntityCamera : GenericCamera
     }
 
     public override void InitializeCamera()
-    {
-        AddMultipleTargetsToList(cameraTargets);
-        
+    {        
         viewPortInfo = new CameraViewPortInfo(Camera.main, viewportOffset);
 
         base.InitializeCamera();
     }
 
+    public void StartCamera()
+    {
+        AddMultipleTargetsToList(cameraTargets);
+    }
+
+    public void StopCamera()
+    {
+        cameraTargetInfo.Clear();
+    }
+
     public override void ManageCamera()
     {
-        List<CameraTargetInfo> activeTargets = ReturnActiveTargets(cameraTargetInfo);
+        if (cameraTargetInfo.Count > 0)
+        {
+            List<CameraTargetInfo> activeTargets = ReturnActiveTargets(cameraTargetInfo);
         
-        ManageCameraMovement(activeTargets);
-        ManageCameraZooming(activeTargets);
+            ManageCameraMovement(activeTargets);
+            ManageCameraZooming(activeTargets);
+        }
     }
 
     private void ManageCameraMovement(List<CameraTargetInfo> targetInfo)

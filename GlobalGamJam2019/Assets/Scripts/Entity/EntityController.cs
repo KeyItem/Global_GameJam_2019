@@ -62,7 +62,7 @@ public class EntityController : MonoBehaviour
         for (int i = 0; i < movement.Count; i++)
         {
             movement[i].isActive = true;
-        }
+        }      
     }
 
     public void StopPlayer()
@@ -70,7 +70,17 @@ public class EntityController : MonoBehaviour
         for (int i = 0; i < movement.Count; i++)
         {
             movement[i].isActive = false;
-        }
+        }      
+    }
+
+    public void StartCamera()
+    {
+        entityCamera.StartCamera();
+    }
+
+    public void StopCamera()
+    {
+        entityCamera.StopCamera();
     }
 
     public void Reset(EntityResetAttributes resetAttributes)

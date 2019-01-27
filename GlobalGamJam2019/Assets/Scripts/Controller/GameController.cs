@@ -90,7 +90,12 @@ public class GameController : MonoBehaviour
         {
             if (CheckForStartGameInput(input))
             {
+                ResetObstacles();
+                
                 isWaitingToStart = false;
+                
+                player.StopCamera();
+                player.StartCamera();
                 
                 player.StartPlayer();
                 
