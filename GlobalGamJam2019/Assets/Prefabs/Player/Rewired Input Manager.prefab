@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5908746983851447023}
   - component: {fileID: 5908746983851447022}
   m_Layer: 0
-  m_Name: Rewired Input Manager 1
+  m_Name: Rewired Input Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
       - _actionCategoryId: 0
         _actionId: 3
         _elementType: 1
-        _elementIdentifierId: 7
+        _elementIdentifierId: 11
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
@@ -361,9 +361,9 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: 5
+        _actionId: 7
         _elementType: 1
-        _elementIdentifierId: 5
+        _elementIdentifierId: 15
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
@@ -372,9 +372,9 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: 7
+        _actionId: 5
         _elementType: 1
-        _elementIdentifierId: 15
+        _elementIdentifierId: 13
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
