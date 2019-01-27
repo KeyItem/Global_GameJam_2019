@@ -107,7 +107,7 @@
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Entity/EntityMovement.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="112">
-              <caret line="207" lean-forward="true" selection-start-line="207" selection-end-line="207" />
+              <caret line="207" selection-start-line="207" selection-end-line="207" />
               <folding>
                 <marker date="1548610657141" expanded="false" signature="6:78" ph="..." />
                 <marker date="1548610657141" expanded="true" signature="123:6551" ph="{...}" />
@@ -161,7 +161,7 @@
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controller/GameController.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="390">
-              <caret line="140" column="28" lean-forward="true" selection-start-line="140" selection-start-column="19" selection-end-line="140" selection-end-column="35" />
+              <caret line="140" column="28" selection-start-line="140" selection-start-column="19" selection-end-line="140" selection-end-column="35" />
               <folding>
                 <marker date="1548609524946" expanded="false" signature="6:78" ph="..." />
                 <marker date="1548609524946" expanded="true" signature="123:6996" ph="{...}" />
@@ -742,7 +742,7 @@
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controller/GameController.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
-          <caret line="140" column="28" lean-forward="true" selection-start-line="140" selection-start-column="19" selection-end-line="140" selection-end-column="35" />
+          <caret line="140" column="28" selection-start-line="140" selection-start-column="19" selection-end-line="140" selection-end-column="35" />
           <folding>
             <marker date="1548609524946" expanded="false" signature="6:78" ph="..." />
             <marker date="1548609524946" expanded="true" signature="123:6996" ph="{...}" />
@@ -835,7 +835,7 @@
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Entity/EntityMovement.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
-          <caret line="207" lean-forward="true" selection-start-line="207" selection-end-line="207" />
+          <caret line="207" selection-start-line="207" selection-end-line="207" />
           <folding>
             <marker date="1548610657141" expanded="false" signature="6:78" ph="..." />
             <marker date="1548610657141" expanded="true" signature="123:6551" ph="{...}" />
