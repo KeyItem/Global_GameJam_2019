@@ -100,10 +100,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  cameraTargetInfo: []
   cameraMovementAttributes:
     cameraMoveSmoothing: 0.53
     cameraRotationalSmoothing: 0
-    cameraOffset: {x: 0, y: 0, z: -20}
+    cameraOffset: {x: 0, y: -2.5, z: -20}
   cameraZoomingAttributes:
     cameraMinZoom: 30
     cameraMaxZoom: 90
