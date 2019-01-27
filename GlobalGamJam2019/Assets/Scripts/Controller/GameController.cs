@@ -93,11 +93,13 @@ public class GameController : MonoBehaviour
                 ResetObstacles();
                 
                 isWaitingToStart = false;
+
+                player.StopPlayerTrailRenderer();
                 
                 player.StopCamera();
                 player.StartCamera();
                 
-                player.StartPlayer();
+                player.StartPlayerMovement();
                 
                 isPlaying = true;
             }
@@ -108,7 +110,7 @@ public class GameController : MonoBehaviour
 
             if (CheckForGameOver(activePlayerRoots))
             {
-                player.StopPlayer();
+                player.StopPlayerMovement();
 
                 isPlaying = false;
 

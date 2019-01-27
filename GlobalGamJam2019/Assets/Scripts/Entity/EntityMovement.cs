@@ -8,7 +8,7 @@ public class EntityMovement : MonoBehaviour
     private Vector2 lastDirection = Vector2.down;
 
     [Space(10)] public bool isActive = false;
-    
+        
     public void Move(InputInfo input, bool isControlled, EntityMovementAttributes movementAttributes, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots)
     {
         if (isActive)

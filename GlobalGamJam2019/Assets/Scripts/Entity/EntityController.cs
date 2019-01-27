@@ -17,6 +17,9 @@ public class EntityController : MonoBehaviour
 
     [Space(10)] public bool isCapturingCamera = true;
 
+    [Header("Entity Trail Renderer Attributes")]
+    private TrailRenderer[] trailRenderers;
+
     public void InitializeController()
     {        
         EntityMovement[] movementControllers = GetComponentsInChildren<EntityMovement>();
@@ -27,6 +30,8 @@ public class EntityController : MonoBehaviour
         }
 
         entityCamera = Camera.main.GetComponent<EntityCamera>();
+
+        trailRenderers = GetComponentsInChildren<TrailRenderer>();
     }
 
     public void UpdateController(InputInfo inputValues)
@@ -57,7 +62,7 @@ public class EntityController : MonoBehaviour
         viewPortInfo = entityCamera.ReturnViewportInfo();
     }
 
-    public void StartPlayer()
+    public void StartPlayerMovement()
     {
         for (int i = 0; i < movement.Count; i++)
         {
@@ -65,7 +70,7 @@ public class EntityController : MonoBehaviour
         }      
     }
 
-    public void StopPlayer()
+    public void StopPlayerMovement()
     {
         for (int i = 0; i < movement.Count; i++)
         {
@@ -81,6 +86,22 @@ public class EntityController : MonoBehaviour
     public void StopCamera()
     {
         entityCamera.StopCamera();
+    }
+
+    public void StartPlayerTrailRenderer()
+    {
+        for (int i = 0; i < trailRenderers.Length; i++)
+        {
+            
+        }
+    }
+
+    public void StopPlayerTrailRenderer()
+    {
+        for (int i = 0; i < trailRenderers.Length; i++)
+        {
+            trailRenderers[i].Clear();
+        }
     }
 
     public void Reset(EntityResetAttributes resetAttributes)
