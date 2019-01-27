@@ -34,7 +34,7 @@ public class EntityController : MonoBehaviour
         trailRenderers = GetComponentsInChildren<TrailRenderer>();
     }
 
-    public void UpdateController(InputInfo inputValues)
+    public void UpdateController(InputInfo inputValues, List<EntityMovement> aliveRoots)
     {   
         if (isCapturingCamera)
         {
@@ -43,17 +43,17 @@ public class EntityController : MonoBehaviour
 
         if (isCapturingMovement)
         {
-            ManageMovement(inputValues);
+            ManageMovement(inputValues, aliveRoots);
         }     
     }
     
-    private void ManageMovement(InputInfo input)
+    private void ManageMovement(InputInfo input, List<EntityMovement> aliveRoots)
     {
         List<EntityMovement> activeRoots = ReturnActiveRoots(input);
         
         for (int i = 0; i < movement.Count; i++)
         {
-            movement[i].Move(input, ReturnIfRootIsActive(movement[i], activeRoots), movementAttributes, viewPortInfo, i, movement);
+            movement[i].Move(input, ReturnIfRootIsActive(movement[i], activeRoots), movementAttributes, viewPortInfo, i, movement, aliveRoots);
         }
     }
 

@@ -9,11 +9,11 @@ public class EntityMovement : MonoBehaviour
 
     [Space(10)] public bool isActive = false;
         
-    public void Move(InputInfo input, bool isControlled, EntityMovementAttributes movementAttributes, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots)
+    public void Move(InputInfo input, bool isControlled, EntityMovementAttributes movementAttributes, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots, List<EntityMovement> aliveRoots)
     {
         if (isActive)
         {
-            Vector2 newMovement = ReturnMovementVector(ReturnInputMovementVector(input), isControlled, movementAttributes, viewPortInfo, rootIndex, activeRoots);
+            Vector2 newMovement = ReturnMovementVector(ReturnInputMovementVector(input), isControlled, movementAttributes, viewPortInfo, rootIndex, activeRoots, aliveRoots);
         
             transform.Translate(newMovement * Time.deltaTime);
             
@@ -46,18 +46,18 @@ public class EntityMovement : MonoBehaviour
         return new Vector2(xAxisRaw, 0);
     }
 
-    public Vector2 ReturnMovementVector(Vector2 inputVector, bool isControlled, EntityMovementAttributes movementAttributes, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots)
+    public Vector2 ReturnMovementVector(Vector2 inputVector, bool isControlled, EntityMovementAttributes movementAttributes, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots, List<EntityMovement> aliveRoots)
     {
         if (inputVector.magnitude > 1)
         {
             inputVector.Normalize();
         }
         
-        Vector2 newMovementVector = movementAttributes.ReturnOngoingSpeed();
-
+        Vector2 newMovementVector = movementAttributes.ReturnOngoingSpeed(aliveRoots.Count);
+        
         if (isControlled)
         {
-            newMovementVector = inputVector * movementAttributes.movementSpeed + movementAttributes.ReturnOngoingSpeed();
+            newMovementVector = inputVector * movementAttributes.movementSpeed + movementAttributes.ReturnOngoingSpeed(aliveRoots.Count);
         }
 
         if (CheckIfMovementIsOutOfBounds(newMovementVector, viewPortInfo))
@@ -200,7 +200,9 @@ public struct EntityMovementAttributes
     [Header("Entity Movement Speed")] public float movementSpeed;
     
     [Header("Entity Ongoing Movement Speed")]
-    public float ongoingSpeed;
+    public float oneRootSpeed;
+    public float twoRootSpeed;
+    public float threeRootSpeed;
 
     [Space(10)] public Vector2 ongoingDirection;
 
@@ -208,8 +210,24 @@ public struct EntityMovementAttributes
     [Range(0.05f, 1.25f)]
     public float collisionOffset;
 
-    public Vector2 ReturnOngoingSpeed()
+    public Vector2 ReturnOngoingSpeed(int rootCount)
     {
-        return ongoingDirection * ongoingSpeed;
+        return (ongoingDirection * ReturnRootSpeed(rootCount));
+    }
+
+    private float ReturnRootSpeed(int rootCount)
+    {
+        if (rootCount == 1)
+        {
+            return oneRootSpeed;
+        }
+        else if (rootCount == 2)
+        {
+            return twoRootSpeed;
+        }
+        else
+        {
+            return threeRootSpeed;
+        }
     }
 }

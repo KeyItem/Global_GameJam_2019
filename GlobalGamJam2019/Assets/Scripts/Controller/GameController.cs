@@ -24,8 +24,8 @@ public class GameController : MonoBehaviour
     public EntityController player;
     
     [Space(10)]
-    public List<EntityMovement> playerRoots;
-    public List<EntityMovement> activePlayerRoots;
+    public List<EntityMovement> playerRoots;    
+    public List<EntityMovement> alivePlayerRoots;
 
     [Header("Player Prefabs")]
     public GameObject newRootObject;
@@ -125,7 +125,7 @@ public class GameController : MonoBehaviour
         {            
             ManageActivePlayerObjects();
 
-            if (CheckForGameOver(activePlayerRoots))
+            if (CheckForGameOver(alivePlayerRoots))
             {
                 player.StopPlayerMovement();
                 
@@ -136,9 +136,9 @@ public class GameController : MonoBehaviour
                 isGameOver = true;
             }
             
-            UpdateDepth(activePlayerRoots);
+            UpdateDepth(alivePlayerRoots);
             
-            player.UpdateController(input);
+            player.UpdateController(input, alivePlayerRoots);
         }
         else if (isGameOver)
         {
@@ -154,7 +154,7 @@ public class GameController : MonoBehaviour
     }
     private void ManageActivePlayerObjects()
     {
-        activePlayerRoots = ReturnActivePlayerObjects(playerRoots);       
+        alivePlayerRoots = ReturnActivePlayerObjects(playerRoots);       
     }
 
     private void ResetPlayerRoots()
@@ -186,9 +186,9 @@ public class GameController : MonoBehaviour
 
     private void AddNewRoot()
     {
-        if (activePlayerRoots.Count < 3)
+        if (alivePlayerRoots.Count < 3)
         {
-            EntityMovement latestRoot = ReturnLatestRoot(activePlayerRoots);
+            EntityMovement latestRoot = ReturnLatestRoot(alivePlayerRoots);
 
             Vector2 spawnRootPosition = ReturnSafeSpawnPosition(latestRoot.transform.position);
 
