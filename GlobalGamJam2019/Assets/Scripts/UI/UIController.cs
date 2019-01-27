@@ -13,6 +13,12 @@ public class UIController : MonoBehaviour
     [Space(10)] public TextMeshProUGUI depthText;
 
     private StringBuilder depthSb = new StringBuilder();
+
+    [Header("Score Text Attributes")] public string baseScoreString = "Score : ";
+
+    [Space(10)] public TextMeshProUGUI scoreText;
+
+    private StringBuilder scoreSb = new StringBuilder();
     
     public void UpdateDepthText(float newDepthValue)
     {
@@ -23,5 +29,16 @@ public class UIController : MonoBehaviour
         depthSb.Append(baseDepthString + crushedDepthValue + baseDepthUnits);
 
         depthText.text = depthSb.ToString();
+    }
+
+    public void UpdateScoreText(float newScore)
+    {
+        float crushedScore = Mathf.Abs(newScore);
+        crushedScore = Mathf.Floor(crushedScore);
+
+        scoreSb.Clear();
+        scoreSb.Append(baseScoreString + newScore);
+
+        scoreText.text = scoreSb.ToString();
     }
 }

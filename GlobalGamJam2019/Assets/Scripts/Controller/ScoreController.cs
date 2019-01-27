@@ -5,8 +5,26 @@ using UnityEngine;
 
 public class ScoreController : MonoBehaviour
 {
-    [Header("Score Attributes")] public List<ScoreInfo> highScores;
+    [Header("Score Attributes")] 
+    public List<ScoreInfo> highScores;
+    
+    [Space(10)]
+    public float currentScore = 0f;
+    
+    public void ManageScore(float currentDepth, int rootCount)
+    {
+        float frameScore = ReturnCalculatedScore(currentDepth, rootCount);
 
+        currentScore += frameScore;
+    }
+
+    public void RegisterScore()
+    {
+        CheckNewScore(currentScore);
+
+        currentScore = 0f;
+    }
+    
     public void CheckNewScore(float newScore)
     {
         float convertedScore = Mathf.Abs(newScore);
@@ -20,6 +38,18 @@ public class ScoreController : MonoBehaviour
     private void AddNewHighScore(float newScore)
     {
         highScores.Add(new ScoreInfo(newScore));
+    }
+
+    public float ReturnCalculatedScore(float currentDepth, int rootCount)
+    {
+        float convertedDepth = Mathf.Abs(currentDepth);
+
+        return (currentDepth * rootCount) / 100;
+    }
+
+    public float ReturnScore()
+    {
+        return currentScore;
     }
 
     public float ReturnHighScore()

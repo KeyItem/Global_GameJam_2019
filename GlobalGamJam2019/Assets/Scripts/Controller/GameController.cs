@@ -129,7 +129,7 @@ public class GameController : MonoBehaviour
             {
                 player.StopPlayerMovement();
                 
-                scoreController.CheckNewScore(playerDepth);
+                scoreController.RegisterScore();
 
                 isPlaying = false;
 
@@ -137,6 +137,8 @@ public class GameController : MonoBehaviour
             }
             
             UpdateDepth(alivePlayerRoots);
+            
+            scoreController.ManageScore(playerDepth, alivePlayerRoots.Count);
             
             player.UpdateController(input, alivePlayerRoots);
         }
@@ -175,6 +177,7 @@ public class GameController : MonoBehaviour
         playerDepth = ReturnPlayerDepth(activeRoots);
         
         UIController.UpdateDepthText(playerDepth);
+        UIController.UpdateScoreText(scoreController.ReturnScore());
 
         CheckForNextDepthMarker(playerDepth);
     }
