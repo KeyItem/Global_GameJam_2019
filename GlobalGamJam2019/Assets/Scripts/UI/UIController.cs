@@ -37,7 +37,7 @@ public class UIController : MonoBehaviour
         crushedScore = Mathf.Floor(crushedScore);
 
         scoreSb.Clear();
-        scoreSb.Append(baseScoreString + newScore);
+        scoreSb.Append(baseScoreString + crushedScore);
 
         scoreText.text = scoreSb.ToString();
     }
