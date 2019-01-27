@@ -73,6 +73,14 @@ public class EntityController : MonoBehaviour
         }
     }
 
+    public void Reset(EntityResetAttributes resetAttributes)
+    {
+        for (int i = 0; i < movement.Count; i++)
+        {
+            movement[i].transform.position = resetAttributes.resetPosition[i];
+        }
+    }
+
     private List<EntityMovement> ReturnActiveRoots(InputInfo input)
     {
         List<EntityMovement> activeRoots = new List<EntityMovement>();

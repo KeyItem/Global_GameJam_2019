@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [Header("Input Attributes")] public EntityInput input;
+    [Header("Game State")] public bool isWaitingToStart = true;
+    public bool isPlaying = false;
+    public bool isGameOver = false;
+    
+    [Header("Input Attributes")] 
+    public EntityInput input;
 
-    [Space(10)] public InputInfo inputValues;
+    [Space(10)] 
+    public InputInfo inputValues;
 
-    [Space(10)] public bool isCapturingInput = true;
+    [Space(10)] 
+    public bool isCapturingInput = true;
 
+    [Header("Player Attributes")] 
+    public EntityResetAttributes resetAttributes;
+    
     [Header("Active Player Objects")] 
     public EntityController player;
+    
+    [Space(10)]
     public List<EntityMovement> playerRoots;
     public List<EntityMovement> activePlayerRoots;
 
@@ -21,11 +33,10 @@ public class GameController : MonoBehaviour
     [Header("Player Stats")] public float playerDepth;
     private float nextDepthMarker;
 
-    [Header("Progression Markers")] public float[] depthMarkers;
+    [Header("Progression Markers")] 
+    public float[] depthMarkers;
 
-    [Header("Game State")] public bool isWaitingToStart = true;
-    public bool isPlaying = false;
-    public bool isGameOver = false;
+    [Header("Obstacles")] public EntityObstacle[] obstacles;
 
     private void Start()
     {
@@ -42,6 +53,7 @@ public class GameController : MonoBehaviour
         InitializeInput();
         InitializeDepthMarkers();
         InitializeEntityController();
+        InitializeObstacles();
     }
 
     private void InitializeInput()
@@ -53,16 +65,16 @@ public class GameController : MonoBehaviour
     {
         player.InitializeController();
     }
+
+    private void InitializeObstacles()
+    {
+        obstacles = GameObject.FindObjectsOfType<EntityObstacle>();
+    }
    
     private void ManageGame()
     {
         ManageInput();
         ManageGameStates(inputValues);
-    }
-
-    public void InitialStartWait()
-    {
-        
     }
 
     private void ManageInput()
@@ -104,7 +116,14 @@ public class GameController : MonoBehaviour
         }
         else if (isGameOver)
         {
-            
+            if (CheckForStartGameInput(input))
+            {
+                ResetPlayerRoots();
+
+                isGameOver = false;
+
+                isWaitingToStart = true;
+            }
         }
     }
     private void ManageActivePlayerObjects()
@@ -114,7 +133,15 @@ public class GameController : MonoBehaviour
 
     private void ResetPlayerRoots()
     {
-        
+        player.Reset(resetAttributes);
+    }
+
+    private void ResetObstacles()
+    {
+        for (int i = 0; i < obstacles.Length; i++)
+        {
+            obstacles[i].Reset();
+        }
     }
 
     private void UpdateDepth(List<EntityMovement> activeRoots)
@@ -233,5 +260,16 @@ public class GameController : MonoBehaviour
         }
 
         return Mathf.NegativeInfinity;
+    }
+}
+
+[System.Serializable]
+public struct EntityResetAttributes
+{
+    [Header("Entity Reset Attributes")] public Vector2[] resetPosition;
+
+    public EntityResetAttributes(Vector2[] newResetPosition)
+    {
+        this.resetPosition = newResetPosition;
     }
 }

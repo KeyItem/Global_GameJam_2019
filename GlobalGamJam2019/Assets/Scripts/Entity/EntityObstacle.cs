@@ -43,6 +43,11 @@ public class EntityObstacle : MonoBehaviour
       }
    }
 
+   public void Reset()
+   {
+      hitEntities.Clear();
+   }
+
    private void OnDrawGizmos()
    {
       Gizmos.color = Color.red;
