@@ -4,22 +4,33 @@ using UnityEngine;
 
 public class EntityMovement : MonoBehaviour
 {
-    [Header("Entity Movement Attributes")] public EntityMovementAttributes movementAttributes;
-
+    [Header("Entity Movement Attributes")]
     private Vector2 lastDirection = Vector2.down;
 
-    [Space(10)] public bool isActive = true;
+    [Space(10)] public bool isActive = false;
     
-    public void Move(InputInfo input, bool isControlled, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots)
+    public void Move(InputInfo input, bool isControlled, EntityMovementAttributes movementAttributes, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots)
     {
         if (isActive)
         {
-            Vector2 newMovement = ReturnMovementVector(ReturnInputMovementVector(input), isControlled, viewPortInfo, rootIndex, activeRoots);
+            Vector2 newMovement = ReturnMovementVector(ReturnInputMovementVector(input), isControlled, movementAttributes, viewPortInfo, rootIndex, activeRoots);
         
             transform.Translate(newMovement * Time.deltaTime);
+            
+            Rotate(newMovement * Time.deltaTime);
 
             lastDirection = newMovement;
         }        
+    }
+
+    public void Rotate(Vector2 inputVector)
+    {
+        //transform.rotation = Quaternion.Euler(inputVector);
+    }
+
+    public void EnableMovement()
+    {
+        isActive = true;
     }
 
     public void DisableMovement()
@@ -35,7 +46,7 @@ public class EntityMovement : MonoBehaviour
         return new Vector2(xAxisRaw, 0);
     }
 
-    public Vector2 ReturnMovementVector(Vector2 inputVector, bool isControlled, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots)
+    public Vector2 ReturnMovementVector(Vector2 inputVector, bool isControlled, EntityMovementAttributes movementAttributes, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> activeRoots)
     {
         if (inputVector.magnitude > 1)
         {
@@ -54,7 +65,7 @@ public class EntityMovement : MonoBehaviour
             newMovementVector.x = 0;
         }
         
-        if (CheckIfMovementIsOverlapping(newMovementVector, viewPortInfo, rootIndex, activeRoots))
+        if (CheckIfMovementIsOverlapping(newMovementVector, movementAttributes, viewPortInfo, rootIndex, activeRoots))
         {
             newMovementVector.x = 0;
         }
@@ -78,7 +89,7 @@ public class EntityMovement : MonoBehaviour
         return false;
     }
 
-    public bool CheckIfMovementIsOverlapping(Vector2 movementVelocity, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> roots) //Garbage code just to test my theory
+    public bool CheckIfMovementIsOverlapping(Vector2 movementVelocity, EntityMovementAttributes movementAttributes, CameraViewPortInfo viewPortInfo, int rootIndex, List<EntityMovement> roots) //Garbage code just to test my theory
     {
         float newXPosition = transform.position.x + (movementVelocity.x * Time.deltaTime);
         

@@ -5,13 +5,9 @@ using UnityEngine.Serialization;
 
 public class EntityController : MonoBehaviour
 {
-    [Header("Entity Input Attributes")] public EntityInput input;
-
-    [Space(10)] public InputInfo inputValues;
-
-    [Space(10)] public bool isCapturingInput = true;
-
     [Header("Entity Movement Attributes")] public List<EntityMovement> movement = new List<EntityMovement>();
+
+    [Space(10)] public EntityMovementAttributes movementAttributes;
 
     [Space(10)] public bool isCapturingMovement = true;
 
@@ -21,20 +17,8 @@ public class EntityController : MonoBehaviour
 
     [Space(10)] public bool isCapturingCamera = true;
 
-    private void Start()
-    {
-        InitializeController();
-    }
-
-    private void Update()
-    {
-        UpdateController();
-    }
-
-    private void InitializeController()
-    {
-        input = GetComponent<EntityInput>();
-        
+    public void InitializeController()
+    {        
         EntityMovement[] movementControllers = GetComponentsInChildren<EntityMovement>();
 
         for (int i = 0; i < movementControllers.Length; i++)
@@ -45,13 +29,8 @@ public class EntityController : MonoBehaviour
         entityCamera = Camera.main.GetComponent<EntityCamera>();
     }
 
-    private void UpdateController()
-    {
-        if (isCapturingInput)
-        {
-            ManageInput();
-        }
-        
+    public void UpdateController(InputInfo inputValues)
+    {   
         if (isCapturingCamera)
         {
             ManageCamera();
@@ -60,30 +39,38 @@ public class EntityController : MonoBehaviour
         if (isCapturingMovement)
         {
             ManageMovement(inputValues);
-        }
-        
+        }     
     }
-
-    private void ManageInput()
-    {
-        input.GetInput();
-
-        inputValues = input.ReturnInput();
-    }
-
+    
     private void ManageMovement(InputInfo input)
     {
         List<EntityMovement> activeRoots = ReturnActiveRoots(input);
         
         for (int i = 0; i < movement.Count; i++)
         {
-            movement[i].Move(inputValues, ReturnIfRootIsActive(movement[i], activeRoots), viewPortInfo, i, movement);
+            movement[i].Move(input, ReturnIfRootIsActive(movement[i], activeRoots), movementAttributes, viewPortInfo, i, movement);
         }
     }
 
     private void ManageCamera()
     {
         viewPortInfo = entityCamera.ReturnViewportInfo();
+    }
+
+    public void StartPlayer()
+    {
+        for (int i = 0; i < movement.Count; i++)
+        {
+            movement[i].isActive = true;
+        }
+    }
+
+    public void StopPlayer()
+    {
+        for (int i = 0; i < movement.Count; i++)
+        {
+            movement[i].isActive = false;
+        }
     }
 
     private List<EntityMovement> ReturnActiveRoots(InputInfo input)

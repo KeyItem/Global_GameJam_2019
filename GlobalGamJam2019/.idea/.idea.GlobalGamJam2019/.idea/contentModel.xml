@@ -385,6 +385,9 @@
             <e p="EntityCamera.cs" t="Include" />
             <e p="GenericCamera.cs" t="Include" />
           </e>
+          <e p="Controller" t="Include">
+            <e p="GameController.cs" t="Include" />
+          </e>
           <e p="Entity" t="Include">
             <e p="EntityController.cs" t="Include" />
             <e p="EntityInput.cs" t="Include" />
